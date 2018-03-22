@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="custodia_form_view">
+			<field name="name">pp.custodia.form</field>
+			<field name="model">pp.custodia</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<div class="oe_button_box" name="button_box">
+							<button name="pertenencias_action_list" type="action" class="oe_stat_button" icon="fa-list-ol" context="{search_default_partner_id': active_id}">
+								<field string="Pertenencias" name="pertenencias" widget="statinfo"/>
+							</button>
+						</div>
+						<group>
+							<group>
+								<field name="name" domain="[('x_imputado','=',True)]">
+									<field name="display_name"/>
+								</field>
+								<field name="traslado_id">
+									<tree>
+										<field name="name"/>
+									</tree>
+								</field>
+								<field name="procedencia"/>
+								<field name="autoridad_que_solicita_id"/>
+							</group>
+							<group>
+								<field name="fecha_recepcion"/>
+								<field name="fecha_hora_entrega"/>
+								<field name="vehiculo_id"/>
+							</group>
+						</group>
+
+						<notebook>
+							<page string="Pertenencias">
+								
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record model='ir.ui.view' id='custodia_tree_view'>
+			<field name='name'>pp.custodia.tree</field>
+			<field name='model'>pp.custodia</field>
+			<field name='arch' type='xml'>
+				<tree>
+					<field name='name'/>
+					<field name='traslado_id'/>
+					<field name='fecha_recepcion'/>
+				</tree>
+			</field>
+		</record>
+		<record id="custodia_action_list" model="ir.actions.act_window">
+			<field name="name">Custodia</field>
+			<field name="res_model">pp.custodia</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+	</data>
+</odoo>

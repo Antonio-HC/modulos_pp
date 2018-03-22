@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="pertenecias_form_view" model="ir.ui.view">
+			<field name="name">pp.pertenencias.form.view</field>
+			<field name="model">pp.pertenencias</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="fecha_registro" />
+							</group>
+							<group>
+								<field name="hora_registro" />
+							</group>
+							<field name="pertenencias_list_ids">
+								<tree>
+									<field name="numero" />
+									<field name="detalle" />
+								</tree>
+							</field>
+							<group>
+								<field name="fecha_devolucion" />
+							</group>
+							<group>
+								<field name="hora_devolucion" />
+							</group>
+							<field name="employee_id" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<!--Vista arbol resguardo de pertenencias-->
+		<record id="pertenencias_tree_view" model="ir.ui.view">
+			<field name="name">pertenencias.tree.view</field>
+			<field name="model">pp.pertenencias</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="fecha_registro" />
+					<field name="hora_registro" />
+					<field name="fecha_devolucion" />
+					<field name="hora_devolucion" />
+					<field name="employee_id" />
+				</tree>
+			</field>
+		</record>
+
+		<!--Vista formulario de lista de pertenencias-->
+		<record id="pertenecia_list_form_view" model="ir.ui.view">
+			<field name="name">pp.pertenencia_list.form.view</field>
+			<field name="model">pp.pertenencia_list</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group colspan="1">
+								<field name="numero"/>
+							</group>
+							<group colspan="2">
+								<field name="detalle"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="pertenencias_action_list" model="ir.actions.act_window">
+			<field name="name">Pertenencias</field>
+			<field name="res_model">pp.pertenencias</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,kanban,form</field>
+			<field name="help" type="html">
+	            <p class="oe_view_nocontent_create">Agregar primer registro</p>
+	        </field>
+	    </record>
+
+		<!--Vista arbol lista de pertenencias
+		<record id="pertenencia_list_tree_view" model="ir.ui.view">
+			<field name="name">pertenencia_list.tree.view</field>
+			<field name="model">pp.pertenencia_list</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="numero" />
+					<field name="detalle" />
+				</tree>
+			</field>
+		</record>-->
+
+	</data>
+</odoo>
