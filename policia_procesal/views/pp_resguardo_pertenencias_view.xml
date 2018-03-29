@@ -8,26 +8,32 @@
 				<form>
 					<sheet>
 						<group>
+							<field name="name" invisible="1"/>
 							<group>
-								<field name="fecha_registro" />
+								<field name="name" domain="[('x_imputado','=',True)]"/>
 							</group>
 							<group>
-								<field name="hora_registro" />
+								<field name="fecha_hora_registro" />
 							</group>
 							<field name="pertenencias_list_ids">
-								<tree>
-									<field name="numero" />
+								<tree editable="bottom">
+									<field name="pertenencia"/>
 									<field name="detalle" />
 								</tree>
 							</field>
-							<group>
-								<field name="fecha_devolucion" />
-							</group>
-							<group>
-								<field name="hora_devolucion" />
-							</group>
-							<field name="employee_id" />
 						</group>
+						<br/>
+						<label string="Policía procesal que realizo el registro"/>
+						<group>
+							<group>
+								<field name="employee_id"/>
+							</group>
+							<group>
+								<field name="fecha_hora_devolucion"/>
+							</group>
+						</group>
+						<label for="conducta"/>
+						<field name="conducta" />
 					</sheet>
 				</form>
 			</field>
@@ -39,11 +45,9 @@
 			<field name="model">pp.pertenencias</field>
 			<field name="arch" type="xml">
 				<tree>
-					<field name="fecha_registro" />
-					<field name="hora_registro" />
-					<field name="fecha_devolucion" />
-					<field name="hora_devolucion" />
-					<field name="employee_id" />
+					<field name="fecha_hora_registro"/>
+					<field name="fecha_hora_devolucion"/>
+					<field name="employee_id" string="Empleado que registró"/>
 				</tree>
 			</field>
 		</record>
@@ -57,7 +61,7 @@
 					<sheet>
 						<group>
 							<group colspan="1">
-								<field name="numero"/>
+								<field name="pertenencia"/>
 							</group>
 							<group colspan="2">
 								<field name="detalle"/>
@@ -67,14 +71,28 @@
 				</form>
 			</field>
 		</record>
-
+		<!--Action-->
 		<record id="pertenencias_action_list" model="ir.actions.act_window">
 			<field name="name">Pertenencias</field>
 			<field name="res_model">pp.pertenencias</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,kanban,form</field>
+			<!--<field name="context" eval="{'search_default_customer': 1}"/>
+			<field name="context">{'default_partner_id': context.get('partner_id', False),}</field>-->
 			<field name="help" type="html">
 	            <p class="oe_view_nocontent_create">Agregar primer registro</p>
+	        </field>
+	    </record>
+
+	    <record model="ir.ui.view" id="pertenencias_search_view">
+	        <field name="name">pertenencias.search.view</field>
+	        <field name="model">pp.pertenencias</field>
+	        <field name="arch" type="xml">
+	            <search>
+	                <field name="name"/>
+	                <!--filter name="my_courses" string="My Courses" domain="[('responsible_id', '=', uid)]"/-->
+	                <!--group string="Group By"><filter name="by_responsible" string="Responsible" context="{'group_by': 'responsible_id'}"/></group-->
+	            </search>
 	        </field>
 	    </record>
 

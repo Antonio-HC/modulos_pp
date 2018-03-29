@@ -5,24 +5,27 @@ from odoo import api, fields, models
 class Pertenencias(models.Model):
     _name = 'pp.pertenencias'
 
-    fecha_registro = fields.Date(
-        string='Fecha'
+    """name = fields.Char(
+        string='Registro',
+        default='Detalles'
+    )"""
+    fecha_hora_registro = fields.Datetime(
+        string='Fecha y hora de registro',
+        default=lambda self: fields.datetime.now()
     )
-    hora_registro = fields.Datetime(
-        string='Hora de registro'
+    fecha_hora_devolucion = fields.Datetime(
+        string='Fecha y hora de devolución',
+        default=lambda self: fields.datetime.now()
     )
-    fecha_devolucion = fields.Date(
-        string='Fecha de devolución'
-    )
-    hora_devolucion = fields.Datetime(
-        string='Hora de devolución'
+    conducta = fields.Text(
+        string='Conducta del imputado',
     )
 
     #==========relationship fields==========
 
     employee_id = fields.Many2one(
         'hr.employee',
-        string='Policía procesal que realizo el regisgtro',
+        string='Nombre',
     )
     pertenencias_list_ids = fields.One2many(
         'pp.pertenencia_list',
@@ -33,29 +36,26 @@ class Pertenencias(models.Model):
         'pp.custodia',
         string='Custodia',
     )
-    partner_id = fields.Many2one(
+    name = fields.Many2one(#partner_id
         'res.partner',
-        string=u'Imputado ID',
-        readonly=True,
+        string=u'Nombre del imputado',
         required=True,
-        default=lambda self: self.env.context.get('partner_id'),
+        #default=lambda self: self.env.context.get('partner_id'),
         ondelete='set null',
     )
 
 class PertenenciasLista(models.Model):
     _name = 'pp.pertenencia_list'
     
-    detalle = fields.Char(string='Detalles')
-    numero = fields.Integer(string='Número')
-
+    detalle = fields.Char(
+        string='Detalles'
+    )
+    pertenencia = fields.Char(
+        string='Pertenencia',
+    )
     resguardo_id = fields.Many2one(
         'pp.pertenencias',
         string='Resguardo de pertenencias',
+        readonly=True, 
     )
-
-    #@api.multi
-    #def auto_increment(self):
-	#	for record in self:
-	#		id_per=record.id
-	#		print "*************Id del producto " + str(id_per)
-	#		record.numero=id_per
+    

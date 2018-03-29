@@ -3,7 +3,7 @@
 	<data>
 		<record model="ir.ui.view" id="name_id_form">
 			<field name="name">imputado_pp_res.partner.form</field>
-			<field name="res_model">res.model</field>
+			<field name="res_model">res.partner</field>
 			<field name="inherit_id" ref="base.view_partner_form"></field>
 			<field name="arch" type="xml">
 				<xpath expr="//button[@name='toggle_active']" position="before">
