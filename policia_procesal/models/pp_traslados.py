@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 class Traslados(models.Model):
     _name = 'pp.traslado'
 
-    no_oficio = fields.Char(
+    name = fields.Char(
         string="Número de oficio"
-    )
-    dependencia = fields.Char(
-        string="Dependencia a la que pertenece"
     )
     procedencia_imputado = fields.Char(
         string="Procedencia del imputado"
@@ -18,7 +15,8 @@ class Traslados(models.Model):
         string="Estado físico y vestimenta del imputado"
     )
     fecha_traslado	 = fields.Date(
-        string="Fecha de traslado"
+        string="Fecha de traslado",
+        default=fields.Datetime.now
     )
     hora_arribo = fields.Datetime(
         string="Hora de arribo",
@@ -35,20 +33,25 @@ class Traslados(models.Model):
     dictamen_medico = fields.Boolean(
         string='¿Cuenta con dictamen médico?'
     )
+    autoridad_que_ordena_id = fields.Char(
+        string='Autoridad que ordena el traslado',
+    )
+    autoridad_que_realiza_id = fields.Char(
+        string='Autoridad que realiza el traslado',
+    )
+    cargo_autoridad_ordena =  fields.Char(
+        string="Cargo",
+    )
+    cargo_autoridad_realiza =  fields.Char(
+        string="Cargo",
+    )
+    dependencia = fields.Char(
+        string="Dependencia a la que pertenece"
+    )
+    
 
     #==========Relationship fields==========
-    name = fields.Many2one(
-        'res.partner',
-        string='Imputado',
-    )
-    autoridad_que_ordena_id = fields.Many2one(
-        'pp.autoridad',
-        string='Autoridad que ordena el traslado'
-    )
-    autoridad_que_realiza_id = fields.Many2one(
-        'pp.autoridad',
-        string='Autoridad que realiza el traslado'
-    )
+    
     employee_ids = fields.Many2many(
         'hr.employee',
         string='Elementos de apoyo',
@@ -61,17 +64,8 @@ class Traslados(models.Model):
         'pp.vehiculos',
         string='Vehículo Oficial',
     )
-    
 
     #==========RELATED==========
-    cargo_autoridad_ordena =  fields.Char(
-        related='autoridad_que_ordena_id.cargo', 
-        string="Cargo",readonly=True
-    )
-    cargo_autoridad_realiza =  fields.Char(
-        related='autoridad_que_realiza_id.cargo', 
-        string="Cargo",readonly=True
-    )
     no_cedula =  fields.Char(
         related='medico_id.cedula', 
         string="Número de cedula",
@@ -86,4 +80,74 @@ class Traslados(models.Model):
         related='vehiculo_id.no_economico',
         string='Número económico',
         readonly=True
+    )
+    """nombre_completo = fields.Char(
+        related='imputado_id.display_name',
+        string='Nombre del imputado',
+    )"""
+
+
+class RetiroTraslado(models.Model):
+    _name = 'pp.retiro_traslado'
+
+    name = fields.Char(
+        string='Número de oficio',
+    )
+    fecha_traslado = fields.Char(
+        string='Fecha de traslado',
+    )
+    observaciones = fields.Text(
+        string='Observaciones',
+    )
+    dependencia = fields.Char(
+        string="Dependencia a la que pertenece"
+    )
+    procedencia_imputado = fields.Char(
+        string="Procedencia del imputado"
+    )
+
+    #==========Relationship fields==========
+    imputado_id = fields.Many2one(
+        'res.partner',
+        string='Imputado',
+    )
+    employee_ids = fields.Many2many(
+        'hr.employee',
+        string='Elementos de apoyo',
+    )
+    autoridad_que_ordena_id = fields.Many2one(
+        'pp.autoridad',
+        string='Autoridad que ordena el traslado'
+    )
+    autoridad_que_realiza_id = fields.Many2one(
+        'pp.autoridad',
+        string='Autoridad que realiza el traslado'
+    )
+    vehiculo_id = fields.Many2one(
+        'pp.vehiculos',
+        string='Vehículo Oficial',
+    )
+
+    #==========RELATED==========
+    cargo_autoridad_realiza =  fields.Char(
+        related='autoridad_que_realiza_id.cargo', 
+        string="Cargo",readonly=True
+    )
+    cargo_autoridad_ordena =  fields.Char(
+        related='autoridad_que_ordena_id.cargo', 
+        string="Cargo",readonly=True
+    )
+    placas = fields.Char(
+        related='vehiculo_id.placas',
+        string='Placas',
+        readonly=True
+    )
+    no_economico = fields.Char(
+        related='vehiculo_id.no_economico',
+        string='Número económico',
+        readonly=True
+    )
+    nombre_completo = fields.Char(
+        related='imputado_id.display_name',
+        string='Nombre del imputado',
     )

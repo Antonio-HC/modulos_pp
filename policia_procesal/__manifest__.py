@@ -18,16 +18,20 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['hr','UMECAS'],
+    'depends': ['hr','UMECAS','base'],
 
     # always loaded
     'data': [
        'views/pp_traslados_view.xml',
+       'views/pp_retiro_traslados_view.xml',
        'views/pp_autoridades_view.xml',
        'views/pp_resguardo_pertenencias_view.xml',
        'views/pp_medicos_view.xml',
        'views/pp_vehiculos_view.xml',
        'views/pp_custodia_provicional_view.xml',
+       'views/pp_audiencias_view.xml',
+       'views/pp_suministro_alimentos_view.xml',
+      # 'views/pp_umc_exp_inherit_view.xml',
        'views/pp_menus_view.xml'
     ],
     'installable':True,

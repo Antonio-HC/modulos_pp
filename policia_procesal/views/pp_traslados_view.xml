@@ -8,22 +8,28 @@
 				<form>
 					<sheet>
 	                    <div class="oe_title">
-	                        <h2>Personal que realiza el traslado</h2>
+	                        <h3>Personal que realiza el traslado</h3>
 	                    </div>
+	                    <div class="row">
+	                    	<div class="col-xs-4">
+	                    		<group>
+	                    			<field name="name" domain="[('x_imputado','=',True)]"/>
+	                    		</group>
+	                    	</div>
+	                    </div>
+	                    
 						<group>
 							<group>
-								<field name="name" domain="[('x_imputado','=',True)]"/>
-								<field name="no_oficio"/>
-								<field name="autoridad_que_ordena_id" placeholder="Seleccione..."/>
-								<field name="cargo_autoridad_ordena" attrs="{'invisible': [('autoridad_que_ordena_id','=',False)]}" />
+								<field name="autoridad_que_ordena_id"/>
+								<field name="cargo_autoridad_ordena" placeholder="Cargo autoridad que ordena"/>
+								<field name="autoridad_que_realiza_id" />
+								<field name="cargo_autoridad_realiza" placeholder="Cargo autoridad que realiza"/>
 								<field name="dependencia" />
 								<field name="procedencia_imputado" />
 								<field name="descripcion_imputado" />
 							</group>
 							<group>
 								<field name="fecha_traslado" />
-								<field name="autoridad_que_realiza_id" placeholder="Seleccione..." />
-								<field name="cargo_autoridad_realiza" attrs="{'invisible': [('autoridad_que_realiza_id','=',False)]}"/>
 								<field name="hora_arribo" />
 								<field name="hora_ingreso" />
 								<field name="hora_regreso" />
@@ -57,14 +63,27 @@
 			</field>
 		</record>
 
+		<!--Vista de arbol-->
+		<record id="traslados_tree_view" model="ir.ui.view">
+			<field name="name">traslado.tree.view</field>
+			<field name="model">pp.traslado</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="fecha_traslado" />
+				</tree>
+			</field>
+		</record>
+
 		<!--search-->
 		<record id="traslados_search_view" model="ir.ui.view">
 	        <field name="name">traslados.search.view</field>
 	        <field name="model">pp.traslado</field>
 	        <field name="arch" type="xml">
 	            <search>
-	                <field name="name" />
+	                <field name="name"/>
 	                <field name="fecha_traslado"/>
+	                <field name="procedencia_imputado" />
 	            </search>
 	        </field>
 	    </record>
@@ -78,18 +97,6 @@
 			<field name="help" type="html">
 	            <p class="oe_view_nocontent_create">Agregar primer registro</p>
 	        </field>
-		</record>
-		
-		<!--Vista de arbol-->
-		<record id="traslados_tree_view" model="ir.ui.view">
-			<field name="name">traslado.tree.view</field>
-			<field name="model">pp.traslado</field>
-			<field name="arch" type="xml">
-				<tree>
-					<field name="name"/>
-					<field name="fecha_traslado" />
-				</tree>
-			</field>
 		</record>
 	</data>
 </odoo>
